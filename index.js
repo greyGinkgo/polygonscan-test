@@ -9,12 +9,13 @@ fetch(
   .then((data) => console.table(data))
 
 function getTokenBySymbol(symbol, tokenList) {
+  let requestedTokens = []
   tokenList.tokens.forEach((token) => {
     if (token.symbol === symbol) {
-      const tokenAddress = token
-      console.table(tokenAddress)
+      requestedTokens.push(token)
     }
-    return 0
+    return 
   })
+  console.log(requestedTokens)
 }
-getTokenBySymbol('CHAMP', tokenList)
+getTokenBySymbol('ETH', tokenList)
