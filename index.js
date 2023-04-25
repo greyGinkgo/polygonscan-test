@@ -1,8 +1,9 @@
 require('dotenv').config()
+const tokenList = require('./tokenList/quickswap-default.tokenlist.json')
 const apiKey = process.env.POLYGONSCAN_API_KEY
 const symbolArg = require('minimist')(process.argv.slice(2))
-const symbol = symbolArg._[0]
-const tokenList = require('./tokenList/quickswap-default.tokenlist.json')
+
+const symbol = symbolArg._[0].toUpperCase()
 
 getTokenBySymbol(symbol, tokenList)
 
@@ -16,7 +17,11 @@ function getTokenBySymbol(symbol, tokenList) {
   })
   requestedTokens.forEach((token) => {
     fetch(
-      `https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=${token.address}&apikey=${apiKey}`
+      `https://api.polygonscan.com/api?` +
+        `module=stats` +
+        `&action=tokensupply` +
+        `&contractaddress=${token.address}` +
+        `&apikey=${apiKey}`
     )
       .then((res) => res.json())
       .then((data) => {
