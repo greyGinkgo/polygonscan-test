@@ -14,6 +14,7 @@ function getTokenBySymbol(symbol, tokenList) {
       const tokenAddress = token
       console.table(tokenAddress)
     }
+    return 0
   })
 }
-console.table(getTokenBySymbol('DAI', tokenList))
+getTokenBySymbol('CHAMP', tokenList)
