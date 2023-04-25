@@ -1,12 +1,6 @@
 require('dotenv').config()
 const tokenList = require('./tokenList/quickswap-default.tokenlist.json')
-const apiKey = process.env.POLYGONSCAN_API_KEY
-
-fetch(
-  `https://api.polygonscan.com/api?module=stats&action=maticprice&apikey=${apiKey}`
-)
-  .then((res) => res.json())
-  .then((data) => console.table(data))
+const apiKey = process.env.POLYGONSCAN_API_KEY;
 
 function getTokenBySymbol(symbol, tokenList) {
   let requestedTokens = []
@@ -14,8 +8,14 @@ function getTokenBySymbol(symbol, tokenList) {
     if (token.symbol === symbol) {
       requestedTokens.push(token)
     }
-    return 
+    return
   })
-  console.log(requestedTokens)
+  requestedTokens.forEach((token) => {
+    fetch(
+      `https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=${token.address}&apikey=${apiKey}`
+    )
+      .then((res) => res.json())
+      .then((data) => {if (data.result != 0) console.table(data.result)})
+  });
 }
-getTokenBySymbol('ETH', tokenList)
+getTokenBySymbol('DAI', tokenList)
